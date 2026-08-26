@@ -1,0 +1,5 @@
+import type { ItineraryEvent } from './types';
+
+export type TripWarning = { type:'overlap'|'sequence'|'booking'; eventIds:string[]; message:string };
+const minutes=(value?:string)=>{if(!value)return null;const [hours,mins]=value.split(':').map(Number);return hours*60+mins};
+export function validateDay(events:ItineraryEvent[]):TripWarning[]{const warnings:TripWarning[]=[];const timed=events.filter((event)=>event.time).sort((a,b)=>(minutes(a.time)??0)-(minutes(b.time)??0));for(let index=1;index<timed.length;index++){const previous=timed[index-1];const current=timed[index];const start=minutes(current.time);const previousStart=minutes(previous.time);const duration=Number(previous.duration?.match(/(\d+)h/)?.[1]??0)*60+Number(previous.duration?.match(/(\d+)m/)?.[1]??0);if(start!==null&&previousStart!==null&&duration>0&&previousStart+duration>start)warnings.push({type:'overlap',eventIds:[previous.id,current.id],message:`${previous.title} may overlap ${current.title}.`})}for(const event of events){if(event.bookingStatus==='Need to Book')warnings.push({type:'booking',eventIds:[event.id],message:`${event.title} still needs to be booked.`})}return warnings}
