@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://roamly-travel-planner.openai.site'),
+  metadataBase: new URL('https://roamly-travel-planner.pasinduranasinghe123.chatgpt.site'),
   title: 'Roamly — Visual travel planning',
   description: 'A beautiful visual workspace where every part of your journey stays connected.',
   openGraph: {
