@@ -3,17 +3,21 @@ export type BookingStatus = 'Researching' | 'Shortlisted' | 'Need to Book' | 'Re
 export type EventCategory = 'Accommodation' | 'Transport' | 'Attraction' | 'Food' | 'Activity' | 'Note';
 
 export type Trip = {
-  id: string; name: string; dates: string; startDate: string; endDate: string; duration: number; route: string; countries: string[]; status: TripStatus; budget: number; planned: number; paid: number; progress: number; travellers: string[]; cover: string;
+  id: string; name: string; dates: string; startDate: string; endDate: string; duration: number; route: string; countries: string[]; status: TripStatus; budget: number; planned: number; paid: number; progress: number; travellers: string[]; cover: string; coverImage?: string; notes?: string;
 };
 
 export type Segment = {
-  id: string; city: string; country: string; startDay: number; endDay: number; color: string; latitude: number; longitude: number;
+  id: string; city: string; country: string; startDay: number; endDay: number; color: string; latitude: number; longitude: number; imageUrl?: string; summary?: string; highlights?: string[]; sourceUrl?: string;
 };
 
 export type ItineraryEvent = {
-  id: string; dayId: string | null; title: string; category: EventCategory; subcategory?: string; time?: string; timePrecision: 'exact' | 'approximate' | 'all_day' | 'unscheduled'; description?: string; origin?: string; destination?: string; transportMode?: string; provider?: string; serviceNumber?: string; duration?: string; location?: string; latitude?: number; longitude?: number; estimatedCost: number; actualCost?: number; currency: string; bookingStatus: BookingStatus; paymentStatus: 'Not Paid' | 'Deposit Paid' | 'Paid' | 'Refunded'; links?: { title: string; url: string; type: string; description: string }[]; details?: string[]; sortOrder: number;
+  id: string; dayId: string | null; title: string; category: EventCategory; subcategory?: string; time?: string; timePrecision: 'exact' | 'approximate' | 'all_day' | 'unscheduled'; description?: string; origin?: string; destination?: string; transportMode?: string; provider?: string; serviceNumber?: string; duration?: string; location?: string; latitude?: number; longitude?: number; estimatedCost: number; actualCost?: number; currency: string; bookingStatus: BookingStatus; paymentStatus: 'Not Paid' | 'Deposit Paid' | 'Paid' | 'Refunded'; links?: { title: string; url: string; type: string; description: string }[]; details?: string[]; imageUrl?: string; imageAlt?: string; visitorInfo?: { label: string; value: string }[]; highlights?: string[]; sourceUrl?: string; sourceLabel?: string; sortOrder: number;
 };
 
 export type TripDay = { id: string; number: number; date: string; title: string; segmentId: string; events: ItineraryEvent[] };
 export type Booking = { id: string; title: string; category: string; provider?: string; reference?: string; status: BookingStatus; paymentStatus: string; deadline?: string; cancellationDeadline?: string; cost: number; currency: string };
 export type SavedPlace = { id: string; title: string; category: string; city: string; note: string };
+
+// A reusable chunk of itinerary — its own mini trip (days, events, destinations)
+// that can be saved to a library and later spliced into any full trip.
+export type SectionTrip = { id: string; name: string; description?: string; days: TripDay[]; segments: Segment[] };

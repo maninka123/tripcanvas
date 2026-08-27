@@ -15,6 +15,13 @@ export function categoryTotals(days: TripDay[]): Record<string, number> {
   }, {});
 }
 
+export function dayCategoryTotals(day: TripDay): Record<string, number> {
+  return day.events.reduce<Record<string, number>>((totals, event) => {
+    totals[event.category] = (totals[event.category] ?? 0) + (event.actualCost ?? event.estimatedCost);
+    return totals;
+  }, {});
+}
+
 export function convertAmount(amount: number, rate: number): number {
   if (!Number.isFinite(amount) || !Number.isFinite(rate) || rate <= 0) throw new Error('A positive amount and exchange rate are required.');
   return Math.round(amount * rate * 100) / 100;

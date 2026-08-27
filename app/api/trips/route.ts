@@ -3,6 +3,7 @@ import { trips, tripDays, tripTravellers, users } from '@/db/schema';
 import { getChatGPTUser } from '@/app/chatgpt-auth';
 import { tripSchema } from '@/lib/validation';
 import { generateDays } from '@/lib/travel-calculations';
+import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 const requestSchema = tripSchema.extend({ id: z.string().uuid() });
@@ -18,4 +19,15 @@ export async function POST(request: Request) {
   await db.insert(tripTravellers).values({ id:crypto.randomUUID(), tripId:value.id, userId:user.userId, role:'owner' });
   await db.insert(tripDays).values(days.map((day)=>({ id:`${value.id}-day-${day.dayNumber}`, tripId:value.id, dayNumber:day.dayNumber, date:day.date, title:'Open day' })));
   return Response.json({ id:value.id }, { status: 201 });
+}
+
+export async function DELETE(request: Request) {
+  const user = await getChatGPTUser();
+  if (!user) return Response.json({ error: 'Authentication required.' }, { status: 401 });
+  const parsed = z.string().uuid().safeParse(new URL(request.url).searchParams.get('id'));
+  if (!parsed.success) return Response.json({ error: 'A valid trip is required.' }, { status: 400 });
+  const db = getDb();
+  const removed = await db.delete(trips).where(and(eq(trips.id, parsed.data), eq(trips.ownerId, user.userId))).returning({ id: trips.id });
+  if (!removed.length) return Response.json({ error: 'Trip not found.' }, { status: 404 });
+  return new Response(null, { status: 204 });
 }
