@@ -10,7 +10,7 @@ import { ItineraryView } from './ItineraryView';
 import { BudgetView } from './BudgetView';
 import { BookingsView } from './BookingsView';
 import { DocumentsView } from './DocumentsView';
-import { chengduSectionTrip, chongqingSectionTrip, demoTrips, japanBookings, japanDays, japanSegments, savedPlaces, zhangjiajieSectionTrip } from '@/lib/demo-data';
+import { chengduSectionTrip, chongqingSectionTrip, demoTrips, japanBookings, japanDays, japanSegments, savedPlaces, xianSectionTrip, zhangjiajieSectionTrip } from '@/lib/demo-data';
 import type { Booking, BookingStatus, EventCategory, ItineraryEvent, SectionTrip, Segment, Trip, TripDay } from '@/lib/types';
 import { categoryTotals, generateDays } from '@/lib/travel-calculations';
 import { eventSchema, tripSchema, type EventInput, type TripInput } from '@/lib/validation';
@@ -33,6 +33,7 @@ const builtInSectionTrips=[
   {section:zhangjiajieSectionTrip,seedKey:'roamly.section.zhangjiajie.seeded.v1'},
   {section:chengduSectionTrip,seedKey:'roamly.section.chengdu.seeded.v1'},
   {section:chongqingSectionTrip,seedKey:'roamly.section.chongqing.seeded.v1'},
+  {section:xianSectionTrip,seedKey:'roamly.section.xian.seeded.v1'},
 ];
 
 const tripBackground: Record<string,string>={japan:'cover-japan',alps:'cover-alps',coast:'cover-coast'};
