@@ -10,7 +10,7 @@ import { ItineraryView } from './ItineraryView';
 import { BudgetView } from './BudgetView';
 import { BookingsView } from './BookingsView';
 import { DocumentsView } from './DocumentsView';
-import { demoTrips, japanBookings, japanDays, japanSegments, savedPlaces } from '@/lib/demo-data';
+import { demoTrips, japanBookings, japanDays, japanSegments, savedPlaces, zhangjiajieSectionTrip } from '@/lib/demo-data';
 import type { Booking, BookingStatus, EventCategory, ItineraryEvent, SectionTrip, Segment, Trip, TripDay } from '@/lib/types';
 import { categoryTotals, generateDays } from '@/lib/travel-calculations';
 import { eventSchema, tripSchema, type EventInput, type TripInput } from '@/lib/validation';
@@ -117,7 +117,7 @@ function TravelMode({ onClose }: {onClose:()=>void}){return <div className="trav
 
 export function PlannerApp({ userName }: { userName:string }) {
   const [trips,setTrips]=useState(demoTrips); const [trip,setTrip]=useState<Trip|null>(null); const [view,setView]=useState<View>('Overview'); const [homeView,setHomeView]=useState<HomeView>('trips'); const [modal,setModal]=useState<Modal>(null); const [daysByTrip,setDaysByTrip]=useState<Record<string,TripDay[]>>({japan:japanDays}); const [segmentsByTrip,setSegmentsByTrip]=useState<Record<string,Segment[]>>({japan:japanSegments}); const [bookingsByTrip,setBookingsByTrip]=useState<Record<string,Booking[]>>({japan:japanBookings}); const [activeSegment,setActiveSegment]=useState('tokyo'); const [selectedEvent,setSelectedEvent]=useState<ItineraryEvent|null>(null); const [selectedSegment,setSelectedSegment]=useState<Segment|null>(null);
-  const [sectionTrips,setSectionTrips]=useState<SectionTrip[]>([]); const [activeSectionId,setActiveSectionId]=useState<string|null>(null); const [insertSectionOpen,setInsertSectionOpen]=useState(false);
+  const [sectionTrips,setSectionTrips]=useState<SectionTrip[]>([zhangjiajieSectionTrip]); const [activeSectionId,setActiveSectionId]=useState<string|null>(null); const [insertSectionOpen,setInsertSectionOpen]=useState(false);
   const [tripAction,setTripAction]=useState<TripAction|null>(null);
   const [saveLoaded,setSaveLoaded]=useState(false);
   /* eslint-disable react-hooks/set-state-in-effect -- restores the traveller's saved trip data from localStorage once on mount */
@@ -130,8 +130,15 @@ export function PlannerApp({ userName }: { userName:string }) {
         if(saved.daysByTrip) setDaysByTrip(saved.daysByTrip);
         if(saved.segmentsByTrip) setSegmentsByTrip(saved.segmentsByTrip);
         if(saved.bookingsByTrip) setBookingsByTrip(saved.bookingsByTrip);
-        if(saved.sectionTrips) setSectionTrips(saved.sectionTrips);
+        if(saved.sectionTrips){
+          const seedKey='roamly.section.zhangjiajie.seeded.v1';
+          const wasSeeded=localStorage.getItem(seedKey)==='1';
+          const alreadyIncluded=saved.sectionTrips.some((item)=>item.id===zhangjiajieSectionTrip.id);
+          setSectionTrips(wasSeeded||alreadyIncluded?saved.sectionTrips:[zhangjiajieSectionTrip,...saved.sectionTrips.filter((item)=>item.name.toLowerCase()!==zhangjiajieSectionTrip.name.toLowerCase())]);
+          localStorage.setItem(seedKey,'1');
+        }
       }
+      else localStorage.setItem('roamly.section.zhangjiajie.seeded.v1','1');
     }catch{/* localStorage unavailable or corrupt save — keep the built-in demo trip */}
     setSaveLoaded(true);
   },[]);
