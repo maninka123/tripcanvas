@@ -45,7 +45,7 @@ export function SectionTripEditor({ section, onUpdateSection, onClose }: { secti
   const reorder = (dayId: string, events: ItineraryEvent[]) => onUpdateSection(section.id, (current) => ({ ...current, days: current.days.map((day) => day.id === dayId ? { ...day, events } : day) }));
 
   return (
-    <div className="main-surface trip-surface">
+    <div className="section-trip-editor">
       <header className="trip-hero cover-new">
         <div className="hero-shade"/>
         <div className="trip-hero-top"><button onClick={onClose}><ArrowLeft size={15}/> Trip library</button></div>
