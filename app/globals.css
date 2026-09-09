@@ -66,3 +66,186 @@ body{font-size:16px;line-height:1.5}.modal-open{overflow:hidden}.eyebrow{font-si
 .dashboard-trip-card{position:relative}.trip-card-open{appearance:none;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer}.trip-card-open:focus-visible{outline:3px solid #e7a15a;outline-offset:-3px;border-radius:18px}.trip-card-actions{position:absolute;z-index:4;top:14px;right:14px;display:flex;gap:6px}.trip-card-actions button{width:32px;height:32px;border:1px solid #ffffff8c;border-radius:9px;background:#fffffff0;color:#315247;display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 10px #173b3324;transition:transform .16s ease,background .16s ease,color .16s ease}.trip-card-actions button:hover{transform:translateY(-1px);background:white;color:#173b33}.trip-card-actions button.delete:hover{background:#fff2ee;color:#b84e3b}.trip-card-actions button:focus-visible{outline:3px solid #e7a15a;outline-offset:2px}.trip-list-view .dashboard-trip-card{display:block}.trip-list-view .trip-card-open{display:grid;grid-template-columns:180px 1fr}.trip-confirm-backdrop{z-index:140;background:#102d2694;backdrop-filter:blur(8px);animation:modal-fade .18s ease}.trip-confirm-dialog{position:relative;width:min(470px,100%);overflow:hidden;border:1px solid #d9e0da;border-radius:24px;background:#fbfbf8;padding:30px;box-shadow:0 30px 90px #0b251d70;text-align:center;animation:modal-rise .22s ease}.trip-confirm-dialog:before{content:'';position:absolute;inset:0 0 auto;height:5px;background:#397064}.trip-confirm-dialog.is-delete:before{background:#c65f4c}.trip-confirm-close{position:absolute;top:18px;right:18px;width:34px;height:34px;border:0;border-radius:10px;background:#edf1ec;color:#60716a;display:grid;place-items:center;cursor:pointer}.trip-confirm-icon{width:58px;height:58px;margin:4px auto 18px;border-radius:18px;background:#e3efea;color:#356a5f;display:grid;place-items:center;box-shadow:inset 0 0 0 1px #d2e2db}.is-delete .trip-confirm-icon{background:#f8e5df;color:#bb5542;box-shadow:inset 0 0 0 1px #f0d2c9}.trip-confirm-dialog .eyebrow{margin:0 0 8px;color:#5b8278}.trip-confirm-dialog.is-delete .eyebrow{color:#b85a47}.trip-confirm-dialog h2{margin:0;font:29px/1.2 Georgia,serif;color:#213f37}.trip-confirm-dialog>p[id]{max-width:390px;margin:13px auto 18px;color:#687871;font-size:14px;line-height:1.6}.trip-confirm-summary{min-height:42px;border:1px solid #dee4de;border-radius:12px;background:white;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 12px;color:#50665e;font-size:12px;font-weight:750}.trip-confirm-summary i{width:3px;height:3px;border-radius:50%;background:#bdc8c2}.trip-confirm-note{margin:14px 0 0!important;color:#8b9691!important;font-size:12px!important}.is-delete .trip-confirm-note{color:#a45849!important;font-weight:750}.trip-confirm-dialog footer{display:grid;grid-template-columns:1fr 1.35fr;gap:10px;margin-top:24px}.trip-confirm-dialog footer button{min-height:46px;border-radius:11px;padding:0 14px;font-size:14px;font-weight:800;cursor:pointer}.confirm-cancel{border:1px solid #d7ded8;background:white;color:#4c625a}.confirm-action{border:0;background:#285348;color:white;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 7px 16px #28534825}.is-delete .confirm-action{background:#bc5744;box-shadow:0 7px 16px #bc57442b}.trip-confirm-dialog footer button:focus-visible{outline:3px solid #e7a15a;outline-offset:2px}
 
 @media(max-width:760px){.trip-list-view .trip-card-open{grid-template-columns:1fr}.trip-confirm-dialog{border-radius:24px 24px 0 0;padding:27px 20px 22px}.trip-confirm-dialog h2{font-size:26px}.trip-confirm-dialog footer{grid-template-columns:1fr}.confirm-action{grid-row:1}.confirm-cancel{grid-row:2}}
+
+/* Apple-inspired product language: quiet hierarchy, physical feedback, and material depth */
+:root{
+  --ink:#1d1d1f;
+  --muted:#6e6e73;
+  --paper:#f5f5f7;
+  --line:rgba(60,60,67,.16);
+  --white:#fff;
+  --green:#0071e3;
+  --apple-blue:#0071e3;
+  --apple-blue-pressed:#0068d1;
+  --apple-red:#ff3b30;
+  --surface:rgba(255,255,255,.78);
+  --surface-solid:#fff;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.05);
+  --shadow-lg:0 24px 70px rgba(0,0,0,.16),0 2px 8px rgba(0,0,0,.08);
+}
+html{background:var(--paper)}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display",var(--font-geist-sans),sans-serif;
+  font-feature-settings:"kern" 1,"liga" 1;
+  -webkit-font-smoothing:antialiased;
+}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button{transition:transform 100ms ease-out,background-color 180ms ease,color 180ms ease,border-color 180ms ease,box-shadow 220ms ease}
+button:active{transform:scale(.97)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(0,113,227,.38);outline-offset:3px}
+.eyebrow{color:#86868b!important;font-size:11px!important;font-weight:700;letter-spacing:.08em}
+
+/* Translucent navigation reads as floating chrome rather than a separate dark room. */
+.product-sidebar{
+  width:244px;
+  padding:24px 18px 20px;
+  color:var(--ink);
+  background:rgba(246,246,248,.82);
+  border-right:1px solid rgba(60,60,67,.12);
+  box-shadow:1px 0 0 rgba(255,255,255,.7) inset;
+  backdrop-filter:blur(32px) saturate(180%);
+  -webkit-backdrop-filter:blur(32px) saturate(180%);
+}
+.brand{gap:10px;padding:0 6px!important;color:var(--ink);font-family:inherit;font-size:20px;font-weight:700;letter-spacing:-.025em}
+.brand-mark{width:36px;height:36px;border-radius:11px;background:linear-gradient(145deg,#3aa0ff,#0068d9);color:#fff;box-shadow:0 6px 16px rgba(0,113,227,.24),inset 0 1px 0 rgba(255,255,255,.35)}
+.sidebar-collapse{width:30px;height:30px;border-radius:9px;color:#86868b}
+.sidebar-collapse:hover{background:rgba(118,118,128,.12);color:var(--ink)}
+.product-sidebar nav{gap:5px}
+.sidebar-nav-main{margin-top:34px}
+.product-sidebar nav button{min-height:44px;padding:10px 12px;border-radius:10px;color:#515154;font-size:14px;font-weight:520}
+.product-sidebar nav button:hover{background:rgba(118,118,128,.09);color:var(--ink)}
+.product-sidebar nav button.active{background:rgba(0,113,227,.12);color:#006edb;font-weight:650;box-shadow:inset 0 0 0 1px rgba(0,113,227,.06)}
+.sidebar-shortcut{margin-top:18px;padding-top:18px;border-top:1px solid rgba(60,60,67,.12)}
+.sidebar-shortcut button,.currency-trigger{min-height:40px;border:1px solid rgba(60,60,67,.11);border-radius:10px;background:rgba(255,255,255,.58);color:#515154;box-shadow:0 1px 1px rgba(0,0,0,.02)}
+.sidebar-shortcut button:hover,.currency-trigger:hover{background:rgba(255,255,255,.92);color:var(--ink)}
+.sidebar-shortcut kbd{color:#86868b}
+.sidebar-bottom{border-top:1px solid rgba(60,60,67,.12)}
+.currency-trigger .currency-code{color:var(--ink)}
+.currency-trigger svg{color:#86868b}
+.sidebar-user>span{background:linear-gradient(145deg,#ffbd66,#ff8d4a);color:#5c2d00;box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.sidebar-user strong{color:var(--ink);font-weight:650}
+.sidebar-user small{color:#86868b}
+.currency-menu{border-color:rgba(60,60,67,.16);border-radius:16px;background:rgba(255,255,255,.94);box-shadow:var(--shadow-lg);backdrop-filter:blur(28px) saturate(180%)}
+.currency-menu button:hover{background:rgba(118,118,128,.1)}
+.currency-menu button.active{background:rgba(0,113,227,.1)}
+.product-sidebar.collapsed{width:76px}
+.product-sidebar.collapsed~.main-surface{margin-left:76px}
+
+/* Content and hierarchy */
+.main-surface{margin-left:244px;padding:58px clamp(30px,5.5vw,88px) 96px;background:radial-gradient(circle at 78% 0,rgba(0,113,227,.055),transparent 31%),var(--paper)}
+.dashboard{max-width:1280px}
+.dashboard-header{align-items:center}
+.dashboard-header h1{margin:0 0 10px;font:700 clamp(42px,4.1vw,58px)/1.02 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.048em;color:#1d1d1f}
+.dashboard-header>div>p:last-child{max-width:540px;color:#6e6e73;font-size:15px;line-height:1.55}
+.dashboard-toolbar{margin:62px 0 20px;align-items:center}
+.dashboard-toolbar h2{margin:0 0 2px;font:650 24px/1.15 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.025em}
+.dashboard-toolbar span{color:#86868b}
+.primary-button,.submit-button,.trip-tabs .quick-add{
+  border-radius:12px;
+  background:var(--apple-blue);
+  color:#fff;
+  box-shadow:0 7px 18px rgba(0,113,227,.18),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.primary-button:hover,.submit-button:hover,.trip-tabs .quick-add:hover{background:#087bea;box-shadow:0 9px 22px rgba(0,113,227,.23),inset 0 1px 0 rgba(255,255,255,.2)}
+.primary-button:active,.submit-button:active,.trip-tabs .quick-add:active{background:var(--apple-blue-pressed);box-shadow:0 3px 8px rgba(0,113,227,.18);transform:scale(.97)}
+.quiet-button{border-radius:10px;background:rgba(118,118,128,.09);color:#515154}
+.quiet-button:hover{background:rgba(118,118,128,.15);color:var(--ink)}
+.view-toggle{padding:3px;border:1px solid rgba(60,60,67,.08);border-radius:10px;background:rgba(118,118,128,.1)}
+.view-toggle button{border-radius:8px;color:#86868b}
+.view-toggle button.active{background:#fff;color:var(--apple-blue);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+
+/* Cards are calm objects with depth that responds to touch. */
+.dashboard-trip-grid{gap:20px}
+.dashboard-trip-card{border-color:rgba(60,60,67,.13);border-radius:24px;background:rgba(255,255,255,.9);box-shadow:var(--shadow-sm);transition:transform 320ms cubic-bezier(.2,.8,.2,1),box-shadow 320ms cubic-bezier(.2,.8,.2,1),border-color 180ms ease}
+.dashboard-trip-card:hover{transform:translateY(-2px) scale(1.006);border-color:rgba(60,60,67,.18);box-shadow:0 2px 4px rgba(0,0,0,.04),0 18px 42px rgba(0,0,0,.1)}
+.dashboard-trip-card:active{transform:scale(.992)}
+.trip-cover{height:190px}
+.trip-cover:before{filter:saturate(.72) contrast(.96)}
+.trip-cover:after{background:linear-gradient(180deg,rgba(0,0,0,.02) 38%,rgba(0,0,0,.32))}
+.cover-japan{--cover:radial-gradient(circle at 23% 33%,#ffb1a6 0 2.5%,transparent 2.9%),radial-gradient(circle at 29% 39%,#ff8678 0 3.3%,transparent 3.7%),linear-gradient(145deg,#c8dcda 0 43%,#6f8e88 43% 47%,#eed7c4 47% 60%,#8e5f5a 60%)}
+.cover-alps{--cover:linear-gradient(155deg,#d9dfe2 0 28%,#87b3c7 28% 37%,#cbd2ce 37% 41%,#748879 41% 57%,#f3f3ef 57% 62%,#7c8984 62%)}
+.cover-coast{--cover:linear-gradient(165deg,#a9d9e8 0 45%,#55a7bd 45% 48%,#f2cb8f 48% 59%,#8f7e69 59% 65%,#4e7068 65%)}
+.trip-cover .trip-status{top:15px;left:15px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.78);color:#3a3a3c;backdrop-filter:blur(16px) saturate(180%);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.cover-number{right:18px;bottom:8px;color:rgba(255,255,255,.66);font:500 43px/1 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.045em}
+.dashboard-trip-copy{padding:21px 20px 19px}
+.dashboard-trip-copy>div:first-child>p{color:#d14f37;font-size:11px;font-weight:700;letter-spacing:.055em}
+.dashboard-trip-copy h3{font:650 21px/1.18 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.025em}
+.dashboard-trip-copy>div:first-child>span,.trip-route,.dashboard-trip-copy>small{color:#86868b}
+.dashboard-card-stats{color:#515154}
+.progress-bar{height:5px;background:#e9e9eb}
+.progress-bar i{background:linear-gradient(90deg,#0a84ff,#64d2ff)}
+.trip-card-actions{top:15px;right:15px}
+.trip-card-actions button{width:34px;height:34px;border-color:rgba(255,255,255,.65);border-radius:11px;background:rgba(255,255,255,.76);color:#515154;backdrop-filter:blur(16px) saturate(180%);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.trip-card-actions button:hover{transform:none;background:#fff;color:var(--apple-blue)}
+.trip-card-actions button.delete:hover{background:#fff;color:var(--apple-red)}
+
+.dashboard-inspiration{min-height:158px;border:1px solid rgba(0,113,227,.1);border-radius:24px;background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(230,243,255,.88));color:var(--ink);box-shadow:var(--shadow-sm);backdrop-filter:blur(24px) saturate(160%)}
+.dashboard-inspiration:after{color:rgba(0,113,227,.055)}
+.dashboard-inspiration .eyebrow{color:#0071e3!important}
+.dashboard-inspiration h2{font:650 25px/1.2 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.025em}
+.dashboard-inspiration p:last-child{color:#6e6e73}
+.dashboard-inspiration button{border:0;border-radius:12px;background:rgba(0,113,227,.1);color:#006edb}
+.dashboard-inspiration button:hover{background:rgba(0,113,227,.16)}
+
+/* Trip workspace */
+.trip-hero{height:310px}
+.hero-shade{background:linear-gradient(90deg,rgba(0,0,0,.56),rgba(0,0,0,.08) 74%),linear-gradient(0deg,rgba(0,0,0,.34),transparent 68%)}
+.trip-hero-top button{height:38px;border-color:rgba(255,255,255,.28);border-radius:12px;background:rgba(30,30,30,.28);backdrop-filter:blur(18px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.15)}
+.trip-hero-top button:hover{background:rgba(255,255,255,.22)}
+.trip-hero-copy .trip-status{background:rgba(255,255,255,.78);color:#1d1d1f;backdrop-filter:blur(16px) saturate(180%)}
+.trip-hero-copy h1{font:700 42px/1.08 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;letter-spacing:-.04em}
+.hero-name-input{font:700 38px/1.08 -apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif}
+.trip-hero-copy>div span{border-color:rgba(255,255,255,.22);border-radius:10px;background:rgba(20,20,20,.18);backdrop-filter:blur(12px)}
+.trip-tabs{height:62px;border-color:rgba(60,60,67,.14);background:rgba(250,250,252,.8);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%)}
+.trip-tabs button{color:#6e6e73}
+.trip-tabs button:hover{color:#1d1d1f;background:rgba(118,118,128,.07)}
+.trip-tabs button.active{color:var(--apple-blue)}
+.trip-tabs button.active:after{height:2px;background:var(--apple-blue)}
+.trip-content{padding-top:40px}
+.overview-section,.overview-metrics article,.day-block,.ideas-panel,.map-view-grid aside,.budget-grid>section,.booking-list,.document-grid article,.wallet-security{border-color:rgba(60,60,67,.13);border-radius:20px;background:rgba(255,255,255,.88);box-shadow:0 1px 2px rgba(0,0,0,.025)}
+.card-title h3,.view-title h2,.day-heading h3,.ideas-header h3,.saved-library-grid h2,.place-modal-body h3{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;font-weight:650;letter-spacing:-.025em}
+.metric-icon{border-radius:11px}
+
+/* Sheets and dialogs materialize from the content they cover. */
+.modal-backdrop,.place-modal-backdrop,.trip-confirm-backdrop{background:rgba(0,0,0,.24);backdrop-filter:blur(8px) saturate(120%);animation:apple-fade 180ms ease-out}
+.modal-panel,.place-modal,.trip-confirm-dialog{border:1px solid rgba(255,255,255,.7);border-radius:24px;background:rgba(248,248,250,.94);box-shadow:var(--shadow-lg);backdrop-filter:blur(36px) saturate(180%);animation:apple-materialize 320ms cubic-bezier(.2,.8,.2,1)}
+.modal-panel h2,.trip-confirm-dialog h2,.place-modal-heading h2{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;font-weight:700;letter-spacing:-.035em}
+.modal-panel header button,.drawer-close,.trip-confirm-close{border-radius:50%;background:rgba(118,118,128,.12);color:#6e6e73}
+.modal-panel input,.modal-panel select,.modal-panel textarea{border-color:rgba(60,60,67,.18);border-radius:11px;color:var(--ink)}
+.modal-panel textarea:focus,.modal-panel input:focus,.modal-panel select:focus{outline:3px solid rgba(0,113,227,.28);outline-offset:0;border-color:var(--apple-blue)}
+.category-picker button.active{border-color:var(--apple-blue);background:var(--apple-blue);color:#fff;box-shadow:0 7px 18px rgba(0,113,227,.16)}
+.category-picker button.active small{color:rgba(255,255,255,.78)}
+.trip-confirm-dialog:before{display:none}
+.trip-confirm-icon{border-radius:16px;background:rgba(0,113,227,.1);color:var(--apple-blue);box-shadow:none}
+.is-delete .trip-confirm-icon{background:rgba(255,59,48,.1);color:var(--apple-red);box-shadow:none}
+.confirm-action{background:var(--apple-blue);box-shadow:0 7px 18px rgba(0,113,227,.18)}
+.is-delete .confirm-action{background:var(--apple-red);box-shadow:0 7px 18px rgba(255,59,48,.16)}
+.confirm-cancel{border-color:rgba(60,60,67,.15);background:#fff}
+@keyframes apple-fade{from{opacity:0}}
+@keyframes apple-materialize{from{opacity:0;transform:translateY(14px) scale(.975);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+
+@media(max-width:1050px){.product-sidebar{width:204px}.main-surface{margin-left:204px}.product-sidebar.collapsed~.main-surface{margin-left:76px}.dashboard-header h1{font-size:46px}}
+@media(max-width:760px){
+  .main-surface{margin-left:0;padding:30px 18px 112px;background:radial-gradient(circle at 85% 0,rgba(0,113,227,.07),transparent 28%),var(--paper)}
+  .dashboard-header{align-items:flex-start}
+  .dashboard-header h1{font-size:38px;letter-spacing:-.042em}
+  .dashboard-header>div>p:last-child{max-width:260px;font-size:14px}
+  .dashboard-toolbar{margin-top:44px}
+  .dashboard-trip-grid{gap:14px}
+  .dashboard-trip-card{min-width:88%;border-radius:22px}
+  .trip-cover{height:178px}
+  .dashboard-inspiration{padding:24px;border-radius:22px}
+  .trip-hero{height:270px}
+  .trip-hero-copy h1{font-size:34px}
+  .trip-content{padding:26px 16px}
+  .mobile-trip-nav{left:12px;right:12px;bottom:10px;height:68px;border:1px solid rgba(255,255,255,.65);border-radius:22px;background:rgba(248,248,250,.82);color:#86868b;box-shadow:0 12px 40px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.8);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%)}
+  .mobile-trip-nav button{color:#86868b;border-radius:15px}
+  .mobile-trip-nav button.active{color:var(--apple-blue);background:rgba(0,113,227,.08)}
+  .modal-panel,.trip-confirm-dialog{border-radius:26px 26px 0 0}
+  .place-modal{border-radius:26px 26px 0 0}
+}
+@media(prefers-reduced-transparency:reduce){.product-sidebar,.trip-tabs,.mobile-trip-nav,.modal-panel,.place-modal,.trip-confirm-dialog{background:#f7f7f8;backdrop-filter:none}.trip-hero-top button,.trip-hero-copy>div span{background:#333;backdrop-filter:none}}
+@media(prefers-contrast:more){.product-sidebar,.trip-tabs,.overview-section,.overview-metrics article,.dashboard-trip-card{border-color:#6e6e73}.product-sidebar nav button.active{box-shadow:inset 0 0 0 2px var(--apple-blue)}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.dashboard-trip-card:hover,.dashboard-trip-card:active,button:active{transform:none!important}}
