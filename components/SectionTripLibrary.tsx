@@ -17,15 +17,16 @@ export function SectionTripLibrary({ sections, onCreate, onOpen, onDelete }: { s
       </header>
       <div className="dashboard-trip-grid section-library-grid">
         {sections.map((section) => (
-          <button key={section.id} type="button" className="dashboard-trip-card cover-new" onClick={() => onOpen(section.id)}>
-            <div className="trip-cover">
-              <span className="trip-duplicate" role="button" tabIndex={0} title="Delete section trip" aria-label={`Delete ${section.name}`} onClick={(e) => { e.stopPropagation(); onDelete(section.id); }} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); onDelete(section.id); } }}><X size={14}/></span>
-            </div>
-            <div className="dashboard-trip-copy">
-              <div><p>SECTION TRIP</p><h3>{section.name}</h3><span>{section.days.length} day{section.days.length === 1 ? '' : 's'}</span></div>
-              <ChevronRight size={18}/>
-            </div>
-          </button>
+          <article key={section.id} className="dashboard-trip-card cover-new">
+            <button type="button" className="trip-card-open" onClick={() => onOpen(section.id)} aria-label={`Open ${section.name}`}>
+              <div className="trip-cover"/>
+              <div className="dashboard-trip-copy">
+                <div><p>SECTION TRIP</p><h3>{section.name}</h3><span>{section.days.length} day{section.days.length === 1 ? '' : 's'}</span></div>
+                <ChevronRight size={18}/>
+              </div>
+            </button>
+            <button type="button" className="trip-duplicate" title="Delete section trip" aria-label={`Delete ${section.name}`} onClick={() => onDelete(section.id)}><X size={14}/></button>
+          </article>
         ))}
         {sections.length === 0 && <p className="empty-inline">No section trips yet — create one to reuse across your itineraries.</p>}
       </div>
