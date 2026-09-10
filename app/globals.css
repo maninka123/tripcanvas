@@ -234,6 +234,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 .overview-section,.overview-metrics article,.day-block,.ideas-panel,.map-view-grid aside,.budget-grid>section,.booking-list,.document-grid article,.wallet-security{border-color:rgba(60,60,67,.13);border-radius:20px;background:rgba(255,255,255,.88);box-shadow:0 1px 2px rgba(0,0,0,.025)}
 .card-title h3,.view-title h2,.day-heading h3,.ideas-header h3,.saved-library-grid h2,.place-modal-body h3{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;font-weight:650;letter-spacing:-.025em}
 .metric-icon{border-radius:11px}
+.real-map.compact{height:400px}
 
 /* Sheets and dialogs materialize from the content they cover. */
 .modal-backdrop,.place-modal-backdrop,.trip-confirm-backdrop{background:rgba(0,0,0,.24);backdrop-filter:blur(8px) saturate(120%);animation:apple-fade 180ms ease-out}
@@ -299,6 +300,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   .trip-hero-copy h1{font-size:34px}
   .trip-content{padding:26px var(--trip-gutter) 0}
   .overview-metrics article{min-width:220px}
+  .real-map.compact{height:340px}
   .ribbon-card .card-title{display:grid;grid-template-columns:minmax(0,1fr);align-items:start}
   .ribbon-card .card-title-actions{width:100%;justify-content:flex-start;overflow-x:auto;padding-bottom:1px}
   .ribbon-card .card-title-actions .quiet-button{white-space:nowrap}
