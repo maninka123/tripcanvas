@@ -1,6 +1,7 @@
 import {
   Bike, BedDouble, Bus, CarFront, CarTaxiFront, Footprints, Landmark, Moon, Mountain, Plane, Route, Ship, ShoppingBag, Sparkles, StickyNote, TrainFront, Utensils, type LucideIcon,
 } from 'lucide-react';
+import { createElement } from 'react';
 import type { Activity, ActivityCategory, BookingStatus, ExpenseCategory, StayType, TimeSlot, TransportMode } from '@/features/trips/types';
 
 // Labels, icons and colours shared across the planner, budget and travel mode.
@@ -63,5 +64,10 @@ export function activityColor(activity: Activity): string {
 }
 
 export const StayIcon = BedDouble;
+
+/** Renders the icon for a plan (category, transport mode or note). */
+export function ActivityIcon({ activity, size = 16 }: { activity: Activity; size?: number }) {
+  return createElement(activityIcon(activity), { size, 'aria-hidden': true });
+}
 
 export const COMMON_CURRENCIES = ['AUD', 'USD', 'EUR', 'GBP', 'CNY', 'JPY', 'NZD', 'CAD', 'SGD', 'HKD', 'THB', 'KRW', 'INR', 'LKR', 'CHF', 'VND', 'IDR', 'MYR', 'PHP', 'AED'];

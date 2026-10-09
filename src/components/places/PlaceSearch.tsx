@@ -30,46 +30,44 @@ export function PlaceSearch({ scope = 'any', near, placeholder, onSelect, extraO
   footer?: ReactNode;
 }) {
   const [query, setQuery] = useState(initialQuery);
-  const [results, setResults] = useState<PlaceResult[]>([]);
-  const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle');
-  const [error, setError] = useState('');
+  const [response, setResponse] = useState<{ key: string; results: PlaceResult[]; attribution: string; error: string | null } | null>(null);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
-  const [attribution, setAttribution] = useState('');
   const listId = useId();
   const inputRef = useRef<HTMLInputElement>(null);
-  const requestRef = useRef(0);
   const nearLat = near?.lat;
   const nearLng = near?.lng;
 
   const link = parseMapLink(query);
+  const text = query.trim();
+  const searchable = text.length >= 2 && !link;
+  const key = `${text}|${scope}|${nearLat ?? ''}|${nearLng ?? ''}`;
+  // Results belong to the query they answered, so a stale response is never shown.
+  const current = searchable && response?.key === key ? response : null;
+  const state: 'idle' | 'loading' | 'done' | 'error' = !searchable ? 'idle' : !current ? 'loading' : current.error ? 'error' : 'done';
+  const results = current?.results ?? [];
+  const attribution = current?.attribution ?? '';
+  const error = current?.error ?? '';
 
   useEffect(() => {
-    const text = query.trim();
-    if (text.length < 2 || parseMapLink(text)) { setResults([]); setState('idle'); return; }
-    const request = ++requestRef.current;
-    setState('loading');
+    if (!searchable) return;
+    let cancelled = false;
     const timer = window.setTimeout(async () => {
       const params = new URLSearchParams({ q: text, scope });
       if (nearLat !== undefined && nearLng !== undefined) { params.set('lat', String(nearLat)); params.set('lng', String(nearLng)); }
       try {
         const data = await api<{ results: PlaceResult[]; attribution: string }>(`/api/places/search?${params}`);
-        if (request !== requestRef.current) return;
-        setResults(data.results);
-        setAttribution(data.attribution);
-        setState('done');
+        if (cancelled) return;
+        setResponse({ key, results: data.results, attribution: data.attribution, error: null });
         setActive(0);
       } catch (cause) {
-        if (request !== requestRef.current) return;
-        setResults([]);
-        setError(cause instanceof Error ? cause.message : 'Search is unavailable.');
-        setState('error');
+        if (!cancelled) setResponse({ key, results: [], attribution: '', error: cause instanceof Error ? cause.message : 'Search is unavailable.' });
       }
     }, 280);
-    return () => window.clearTimeout(timer);
-  }, [query, scope, nearLat, nearLng]);
+    return () => { cancelled = true; window.clearTimeout(timer); };
+  }, [searchable, text, key, scope, nearLat, nearLng]);
 
-  const usePastedLink = async () => {
+  const applyPastedLink = async () => {
     if (!link) return;
     let place: PlaceResult = { providerId: null, name: link.name ?? 'Pinned location', kind: 'pin', category: 'other', isLocality: false, address: `${link.lat.toFixed(5)}, ${link.lng.toFixed(5)}`, city: null, region: null, country: null, countryCode: null, lat: link.lat, lng: link.lng, timezone: null };
     try {
@@ -84,15 +82,13 @@ export function PlaceSearch({ scope = 'any', near, placeholder, onSelect, extraO
   const choose = (place: PlaceResult) => {
     onSelect(place);
     setQuery('');
-    setResults([]);
     setOpen(false);
-    setState('idle');
   };
 
   type Row = { key: string; render: ReactNode; run: () => void };
   const rows: Row[] = [];
   if (link) {
-    rows.push({ key: 'link', run: () => void usePastedLink(), render: <><span className="place-option-icon"><Link2 size={16} /></span><span className="place-option-text"><strong>{link.name ?? 'Use this pinned location'}</strong><span>From pasted link · {link.lat.toFixed(4)}, {link.lng.toFixed(4)}</span></span></> });
+    rows.push({ key: 'link', run: () => void applyPastedLink(), render: <><span className="place-option-icon"><Link2 size={16} /></span><span className="place-option-text"><strong>{link.name ?? 'Use this pinned location'}</strong><span>From pasted link · {link.lat.toFixed(4)}, {link.lng.toFixed(4)}</span></span></> });
   }
   results.forEach((place) => {
     const Icon = place.isLocality ? Building2 : ICONS[place.category] ?? MapPin;

@@ -2,7 +2,7 @@
 
 import { ArrowLeft, BedDouble, ChevronLeft, ChevronRight, Clock, Copy, ExternalLink, FileText, Mail, MapPin, Navigation, Phone, Ticket, WifiOff } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
 import { activityColor, activityIcon, BOOKING, SLOTS } from '@/components/planner/meta';
 import { IconButton } from '@/components/ui/Button';
 import { useToast } from '@/components/ui/Toast';
@@ -18,13 +18,20 @@ import { directionsLink, mapsLink } from '@/lib/urls';
 
 const offlineKey = (id: string) => `tripcanvas.offline.${id}`;
 
+const currentMinute = () => Math.floor(Date.now() / 60_000);
+function subscribeMinute(onChange: () => void) {
+  const timer = window.setInterval(onChange, 15_000);
+  return () => window.clearInterval(timer);
+}
+
 export function TravelMode({ initial }: { initial: TripAggregate }) {
   const toast = useToast();
   const [aggregate, setAggregate] = useState(initial);
   const [offline, setOffline] = useState<{ savedAt: string } | null>(null);
-  // The device clock decides “today”; read it only after mount so server and client render the same markup.
-  const [now, setNow] = useState<Date | null>(null);
-  useEffect(() => { setNow(new Date()); const timer = window.setInterval(() => setNow(new Date()), 60_000); return () => window.clearInterval(timer); }, []);
+  // The device clock decides “today”. The server snapshot is null, so server and
+  // client render the same markup; the client then updates every minute.
+  const minute = useSyncExternalStore(subscribeMinute, currentMinute, () => null);
+  const now = minute === null ? null : new Date(minute * 60_000);
   const today = now ? todayIso(now) : '';
   const { day: startDay, isToday } = travelDay(aggregate, today);
   const [dayNumber, setDayNumber] = useState(1);

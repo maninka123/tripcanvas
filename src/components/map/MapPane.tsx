@@ -30,7 +30,7 @@ export function MapPane() {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [routeMode, setRouteMode] = useState<RouteMode>('walk');
-  const [route, setRoute] = useState<RouteState>({ status: 'idle', coordinates: [], minutes: 0, km: 0, attribution: '' });
+  const [routeResults, setRouteResults] = useState<Record<string, RouteResult | 'error'>>({});
   const handlers = useRef({ select: (_id: string, _kind: string) => {} });
 
   const day = ui.dayNumber ? aggregate.days.find((item) => item.number === ui.dayNumber) ?? null : null;
@@ -39,11 +39,25 @@ export function MapPane() {
   const data = useMemo(() => buildMapData(aggregate, mode, day?.id ?? null, destinationId), [aggregate, mode, day?.id, destinationId]);
   const selectedId = ui.selection?.id ?? null;
 
-  handlers.current.select = (id, kind) => {
-    if (kind === 'destination') { ui.setDestinationFocus(id); ui.setMapMode('destination'); return; }
-    if (kind === 'stay') { ui.select({ type: 'stay', id }); ui.openEditor({ type: 'stay', id }); return; }
-    ui.select({ type: 'activity', id }, { scroll: true });
-  };
+  // Map event listeners are registered once; they call the latest handler through this ref.
+  useEffect(() => {
+    handlers.current.select = (id, kind) => {
+      if (kind === 'destination') { ui.setDestinationFocus(id); ui.setMapMode('destination'); return; }
+      if (kind === 'stay') { ui.select({ type: 'stay', id }); ui.openEditor({ type: 'stay', id }); return; }
+      ui.select({ type: 'activity', id }, { scroll: true });
+    };
+  });
+
+  // Calculated route for the selected day, derived from results keyed by mode and stops.
+  const stopsKey = data.routeStops.map((stop) => `${stop.lat.toFixed(5)},${stop.lng.toFixed(5)}`).join(';');
+  const routeKey = mode === 'day' && data.routeStops.length >= 2 ? `${routeMode}|${stopsKey}` : null;
+  const routeEntry = routeKey ? routeResults[routeKey] ?? routeCache.get(routeKey) : undefined;
+  const route = useMemo<RouteState>(() => {
+    if (!routeKey) return { status: 'idle', coordinates: [], minutes: 0, km: 0, attribution: '' };
+    if (routeEntry === undefined) return { status: 'loading', coordinates: [], minutes: 0, km: 0, attribution: '' };
+    if (routeEntry === 'error' || !routeEntry.legs.length) return { status: 'unavailable', coordinates: [], minutes: 0, km: 0, attribution: '' };
+    return { status: 'ready', coordinates: routeEntry.legs.map((leg) => leg.coordinates), minutes: routeEntry.legs.reduce((sum, leg) => sum + leg.durationMinutes, 0), km: routeEntry.legs.reduce((sum, leg) => sum + leg.distanceKm, 0), attribution: routeEntry.attribution };
+  }, [routeKey, routeEntry]);
 
   // Create the map once.
   useEffect(() => {
@@ -131,26 +145,18 @@ export function MapPane() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- refit only when the view changes
   }, [ready, fitKey]);
 
-  // Calculated route for the selected day.
-  const stopsKey = data.routeStops.map((stop) => `${stop.lat.toFixed(5)},${stop.lng.toFixed(5)}`).join(';');
+  // Fetch a route the first time a set of stops is shown.
   useEffect(() => {
-    if (mode !== 'day' || data.routeStops.length < 2) { setRoute({ status: 'idle', coordinates: [], minutes: 0, km: 0, attribution: '' }); return; }
-    const key = `${routeMode}|${stopsKey}`;
-    const apply = (result: RouteResult) => setRoute(result.legs.length
-      ? { status: 'ready', coordinates: result.legs.map((leg) => leg.coordinates), minutes: result.legs.reduce((sum, leg) => sum + leg.durationMinutes, 0), km: result.legs.reduce((sum, leg) => sum + leg.distanceKm, 0), attribution: result.attribution }
-      : { status: 'unavailable', coordinates: [], minutes: 0, km: 0, attribution: '' });
-    const cached = routeCache.get(key);
-    if (cached) { apply(cached); return; }
+    if (!routeKey || routeEntry !== undefined) return;
     let cancelled = false;
-    setRoute((current) => ({ ...current, status: 'loading' }));
     const timer = window.setTimeout(() => {
       api<RouteResult>('/api/routes', { method: 'POST', json: { mode: routeMode, points: data.routeStops.slice(0, 20) } })
-        .then((result) => { routeCache.set(key, result); if (!cancelled) apply(result); })
-        .catch(() => { if (!cancelled) setRoute({ status: 'unavailable', coordinates: [], minutes: 0, km: 0, attribution: '' }); });
+        .then((result) => { routeCache.set(routeKey, result); if (!cancelled) setRouteResults((current) => ({ ...current, [routeKey]: result })); })
+        .catch(() => { if (!cancelled) setRouteResults((current) => ({ ...current, [routeKey]: 'error' })); });
     }, 350);
     return () => { cancelled = true; window.clearTimeout(timer); };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- keyed on the stops, not the array identity
-  }, [mode, stopsKey, routeMode]);
+  }, [routeKey, routeEntry]);
 
   const selected = selectedId ? aggregate.activities.find((activity) => activity.id === selectedId) ?? null : null;
   const fit = () => {

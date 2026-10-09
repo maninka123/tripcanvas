@@ -86,7 +86,7 @@ function Planner({ user, assistantAvailable, welcome }: { user: PlannerUser; ass
       </main>
       <nav className="mobile-nav planner-mobile-nav" aria-label="Trip sections">
         {TABS.map(({ id, label, icon: Icon }) => (
-          <button key={id} type="button" aria-selected={view === id} onClick={() => ui.setView(id)}><Icon size={21} aria-hidden />{label}</button>
+          <button key={id} type="button" aria-current={view === id ? 'page' : undefined} onClick={() => ui.setView(id)}><Icon size={21} aria-hidden />{label}</button>
         ))}
       </nav>
       <EditorDrawer />

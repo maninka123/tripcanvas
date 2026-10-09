@@ -12,7 +12,7 @@ import { formatMoney } from '@/features/budget/budget';
 import { useTrip } from '@/features/trips/client/TripContext';
 import type { Activity, Day } from '@/features/trips/types';
 import { formatDuration, journeyMinutes, zoneLabel } from '@/lib/dates';
-import { activityColor, activityIcon, BOOKING, SLOTS } from './meta';
+import { ActivityIcon, activityColor, BOOKING, SLOTS } from './meta';
 import { usePlannerUI } from './planner-state';
 
 export function timeLabel(activity: Activity): string {
@@ -56,7 +56,6 @@ export const ActivityCardView = forwardRef<HTMLLIElement, CardProps>(function Ac
   const { run, canEdit, view } = useTrip();
   const ui = usePlannerUI();
   const toast = useToast();
-  const Icon = activityIcon(activity);
   const booking = BOOKING[activity.bookingStatus];
   const located = typeof activity.place?.lat === 'number';
   const sub = subtitle(activity, day?.date ?? null);
@@ -90,7 +89,7 @@ export const ActivityCardView = forwardRef<HTMLLIElement, CardProps>(function Ac
       ) : <span className="activity-handle-spacer" />}
       <span className="activity-time tabular">{timeLabel(activity)}</span>
       <span className="activity-icon" style={{ color: activityColor(activity), background: `color-mix(in srgb, ${activityColor(activity)} 13%, white)` }} aria-hidden>
-        <Icon size={16} />
+        <ActivityIcon activity={activity} />
       </span>
       <button type="button" className="activity-body" onClick={open} onMouseEnter={() => located && ui.select({ type: 'activity', id: activity.id })}>
         <span className="activity-title">{activity.title}</span>
