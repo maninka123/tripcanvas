@@ -1,0 +1,24 @@
+/* ---------- Map pane ---------- */
+.map-pane { position: relative; display: flex; flex-direction: column; border-left: 1px solid var(--line); background: #e9ebe4; min-height: 360px; }
+.map-toolbar { position: absolute; z-index: 5; top: 12px; left: 12px; right: 56px; display: flex; gap: var(--space-2); align-items: center; pointer-events: none; }
+.map-toolbar > * { pointer-events: auto; }
+.map-toolbar .segmented { background: rgb(255 255 255 / 0.94); box-shadow: var(--shadow-md); }
+.map-toolbar .segmented button[aria-pressed='true'] { background: var(--primary); color: #fff; }
+.map-toolbar .icon-btn-outline { box-shadow: var(--shadow-md); }
+.map-route-mode { width: auto; min-height: 36px; box-shadow: var(--shadow-md); border-color: transparent; }
+.map-canvas { flex: 1; min-height: 0; }
+.map-canvas .maplibregl-ctrl-top-right { top: 6px; right: 6px; }
+.map-loading, .map-fallback { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-3); font-size: var(--text-sm); pointer-events: none; }
+.map-fallback { pointer-events: auto; display: flex; align-items: center; justify-content: center; gap: 8px; padding: var(--space-8); text-align: center; background: var(--surface-sunken); color: var(--ink-2); }
+.map-legend {
+  position: absolute; z-index: 4; left: 12px; bottom: 30px; max-width: min(460px, calc(100% - 24px));
+  display: flex; flex-direction: column; gap: 2px; padding: 8px 12px; border-radius: var(--radius-md);
+  background: rgb(255 255 255 / 0.95); box-shadow: var(--shadow-md); font-size: var(--text-xs); color: var(--ink-2);
+}
+.map-legend .is-approx { color: var(--warning); }
+.map-card {
+  position: absolute; z-index: 6; left: 12px; right: 12px; bottom: 30px; display: flex; align-items: center; gap: var(--space-2);
+  padding: 10px 12px; background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); max-width: 520px;
+}
+.map-card ~ .map-legend { display: none; }
+.maplibregl-ctrl-attrib { font-size: 10px; }

@@ -1,40 +1,45 @@
 {
-  "name": "sites-project",
-  "version": "0.1.0",
+  "name": "tripcanvas",
+  "version": "1.0.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vinext dev",
+    "dev": "npm run db:migrate && vinext dev",
     "build": "vinext build",
     "start": "vinext start",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "drizzle-kit generate",
-    "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "test": "vitest run --config tests/vitest.config.ts",
+    "test:e2e": "playwright test --config tests/e2e/playwright.config.ts",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build",
+    "db:generate": "drizzle-kit generate --config src/db/drizzle.config.ts",
+    "db:migrate": "node src/db/migrate-local.mjs migrate",
+    "db:reset": "node src/db/migrate-local.mjs reset"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@hookform/resolvers": "^5.9.1",
-    "date-fns": "^4.4.0",
+    "@photostructure/tz-lookup": "^11.7.0",
     "drizzle-orm": "0.45.2",
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.8",
     "lucide-react": "^1.34.0",
     "maplibre-gl": "^6.6.0",
     "next": "16.2.6",
+    "radix-ui": "^1.4.3",
     "react": "19.2.6",
     "react-dom": "19.2.6",
-    "react-hook-form": "^7.86.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.37.1",
     "@cloudflare/workers-types": "4.20260515.1",
     "@openai/sites-vite-plugin": "^0.1.0 || ^0.2.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "4.2.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
@@ -52,5 +57,6 @@
     "vitest": "^4.1.11",
     "wrangler": "4.92.0"
   },
-  "type": "module"
+  "type": "module",
+  "description": "TripCanvas — plan, map and carry your trips."
 }

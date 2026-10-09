@@ -1,0 +1,49 @@
+/* ---------- App header (My Trips, Saved Places) ---------- */
+.app-header {
+  position: sticky; top: 0; z-index: 30;
+  background: rgb(246 243 236 / 0.86); backdrop-filter: saturate(1.4) blur(14px);
+  border-bottom: 1px solid var(--line);
+}
+.app-header-inner {
+  max-width: var(--content-max); margin: 0 auto; height: var(--header-h);
+  padding: 0 var(--space-5); display: flex; align-items: center; gap: var(--space-5);
+}
+.logo { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-weight: 650; font-size: 17px; letter-spacing: -0.01em; flex: none; }
+.logo:hover { color: var(--ink); }
+.logo svg { border-radius: 8px; }
+.app-nav { display: flex; gap: 2px; }
+.app-nav-link {
+  display: inline-flex; align-items: center; gap: 7px; padding: 8px 12px; border-radius: var(--radius-sm);
+  color: var(--ink-2); text-decoration: none; font-weight: 550; font-size: var(--text-sm);
+}
+.app-nav-link:hover { background: var(--surface-sunken); color: var(--ink); }
+.app-nav-link[aria-current='page'] { color: var(--primary); background: var(--primary-soft); }
+.avatar-btn { border: 0; background: none; padding: 2px; border-radius: 50%; }
+
+.page { max-width: var(--content-max); margin: 0 auto; padding: var(--space-8) var(--space-5) var(--space-12); }
+.page-header { display: flex; align-items: flex-end; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6); }
+.page-header h1 { font-size: 44px; line-height: 1.05; }
+.page-header p { color: var(--ink-2); margin-top: 6px; font-size: var(--text-lg); }
+
+/* Mobile bottom navigation for the top-level areas */
+.mobile-nav { display: none; }
+
+@media (max-width: 720px) {
+  .app-header-inner { padding: 0 var(--space-4); gap: var(--space-3); }
+  .app-nav { display: none; }
+  .page { padding: var(--space-5) var(--space-4) calc(96px + env(safe-area-inset-bottom)); }
+  .page-header h1 { font-size: 34px; }
+  .page-header p { font-size: var(--text-md); }
+  .mobile-nav {
+    position: fixed; z-index: 40; left: 0; right: 0; bottom: 0; display: flex;
+    background: rgb(255 255 255 / 0.94); backdrop-filter: blur(14px); border-top: 1px solid var(--line);
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+  }
+  .mobile-nav a, .mobile-nav button {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 6px 4px; min-height: 52px;
+    border: 0; background: none; border-radius: var(--radius-sm);
+    font-size: 11px; font-weight: 600; color: var(--ink-3); text-decoration: none;
+  }
+  .mobile-nav [aria-current='page'], .mobile-nav [aria-selected='true'] { color: var(--primary); }
+  .mobile-nav [aria-current='page'] svg, .mobile-nav [aria-selected='true'] svg { stroke-width: 2.4; }
+}

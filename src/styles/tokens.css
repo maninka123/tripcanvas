@@ -1,0 +1,106 @@
+/* TripCanvas design tokens. Components use only these variables. */
+:root {
+  /* Surfaces */
+  --bg: #f6f3ec;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #efebe2;
+  --surface-hover: #f3efe6;
+  --overlay: rgb(20 28 24 / 0.42);
+
+  /* Text — all pairs meet WCAG AA on --bg and --surface */
+  --ink: #1b2520;
+  --ink-2: #4b5952;
+  --ink-3: #5f6c65;
+  --ink-inverse: #ffffff;
+
+  /* Lines */
+  --line: #e3ddd0;
+  --line-strong: #cbc3b2;
+
+  /* Brand */
+  --primary: #1f4d3a;
+  --primary-hover: #173c2d;
+  --primary-soft: #e3ede6;
+  --primary-soft-ink: #1a4232;
+  --accent: #b5552d;
+  --accent-hover: #9c4723;
+  --accent-soft: #f7e5da;
+
+  /* Status (text colour / soft background) */
+  --success: #23693f;
+  --success-soft: #e2f1e7;
+  --warning: #7f5300;
+  --warning-soft: #fbefd5;
+  --danger: #a8231b;
+  --danger-soft: #fbe6e3;
+  --info: #2a5781;
+  --info-soft: #e4edf7;
+
+  /* Plan categories */
+  --cat-sight: #4a6896;
+  --cat-food: #b5552d;
+  --cat-activity: #23705f;
+  --cat-nature: #557235;
+  --cat-shopping: #85527f;
+  --cat-nightlife: #6449a0;
+  --cat-other: #5f6c65;
+  --cat-transport: #2f6385;
+  --cat-stay: #85631f;
+  --cat-note: #7b6a4d;
+
+  /* Focus */
+  --focus: #2d6cdf;
+  --focus-ring: 0 0 0 3px rgb(45 108 223 / 0.35);
+
+  /* Shape */
+  --radius-xs: 6px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgb(27 37 32 / 0.06), 0 1px 1px rgb(27 37 32 / 0.04);
+  --shadow-md: 0 6px 20px rgb(27 37 32 / 0.08), 0 1px 3px rgb(27 37 32 / 0.06);
+  --shadow-lg: 0 20px 48px rgb(27 37 32 / 0.16), 0 2px 8px rgb(27 37 32 / 0.08);
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* Type */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: var(--font-display-serif), 'Iowan Old Style', Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --text-xs: 12px;
+  --text-sm: 13.5px;
+  --text-md: 15px;
+  --text-lg: 17px;
+  --text-xl: 21px;
+  --text-2xl: 28px;
+  --text-3xl: 40px;
+
+  /* Layout */
+  --header-h: 60px;
+  --content-max: 1240px;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --duration: 160ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration: 0ms; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

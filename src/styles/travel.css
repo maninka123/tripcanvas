@@ -1,0 +1,47 @@
+/* ---------- Travel Mode ---------- */
+.travel { min-height: 100dvh; background: var(--bg); }
+.travel-header { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: var(--space-3); padding: 10px var(--space-4); background: var(--primary); color: #fff; }
+.travel-back { color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: var(--text-sm); padding: 6px 8px; border-radius: var(--radius-sm); }
+.travel-back:hover { color: #fff; background: rgb(255 255 255 / 0.12); }
+.travel-trip { opacity: 0.85; font-size: var(--text-sm); }
+.travel-main { max-width: 640px; margin: 0 auto; padding: var(--space-4) var(--space-4) var(--space-12); display: flex; flex-direction: column; gap: var(--space-4); }
+.travel-daynav { display: flex; align-items: center; gap: var(--space-2); }
+.travel-daynav .icon-btn { width: 48px; height: 48px; border: 1px solid var(--line); background: var(--surface); }
+.travel-day { flex: 1; text-align: center; }
+.travel-day h1 { font-size: 40px; line-height: 1.05; }
+.travel-next { background: var(--primary); color: #fff; border-radius: var(--radius-xl); padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-2); box-shadow: var(--shadow-md); }
+.travel-next .eyebrow { color: #b9d4c3; }
+.travel-next h2 { font-size: 26px; }
+.travel-next .muted { color: #d7e6dc; }
+.travel-next .btn { --btn-bg: rgb(255 255 255 / 0.14); --btn-ink: #fff; --btn-border: rgb(255 255 255 / 0.22); }
+.travel-next .btn:hover { --btn-bg: rgb(255 255 255 / 0.24); }
+.travel-next .btn-primary { --btn-bg: #fff; --btn-ink: var(--primary); --btn-border: #fff; }
+.travel-next .btn-soft { --btn-bg: rgb(255 255 255 / 0.18); --btn-ink: #fff; }
+.travel-next.is-empty { background: var(--surface); color: var(--ink); border: 1px solid var(--line); }
+.travel-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-2); }
+.travel-actions .btn { min-height: 44px; }
+.travel-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-2); box-shadow: var(--shadow-sm); }
+.travel-card summary { cursor: pointer; }
+.travel-card-head { display: flex; align-items: center; gap: var(--space-2); }
+.travel-card-head h2 { font-size: var(--text-lg); flex: 1; }
+.travel-journey { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--space-3); align-items: center; }
+.travel-journey > div { display: flex; flex-direction: column; }
+.travel-journey > div:last-child { text-align: right; }
+.travel-journey strong { font-size: 24px; font-variant-numeric: tabular-nums; }
+.travel-journey span { font-size: var(--text-sm); color: var(--ink-2); }
+.travel-journey-line { font-size: var(--text-xs) !important; color: var(--ink-3) !important; border-top: 2px dashed var(--line-strong); padding-top: 4px; min-width: 60px; text-align: center; }
+.travel-facts { display: flex; flex-direction: column; gap: 4px; margin: 0; }
+.travel-facts div { display: flex; gap: var(--space-2); font-size: var(--text-sm); }
+.travel-facts dt { color: var(--ink-3); min-width: 80px; }
+.travel-facts dd { margin: 0; }
+.travel-row { display: flex; gap: var(--space-2); align-items: center; padding: 12px 14px; border-radius: var(--radius-md); background: var(--surface-sunken); font-size: var(--text-sm); }
+.travel-section-title { font-size: var(--text-lg); margin-bottom: var(--space-2); }
+.travel-timeline { list-style: none; display: flex; flex-direction: column; }
+.travel-timeline li { display: grid; grid-template-columns: 64px 28px 1fr; gap: var(--space-2); align-items: start; padding: 8px 0; position: relative; }
+.travel-timeline li::before { content: ''; position: absolute; left: 77px; top: 34px; bottom: -8px; width: 2px; background: var(--line); }
+.travel-timeline li:last-child::before { display: none; }
+.travel-timeline li.is-next .travel-item strong { color: var(--accent-hover); }
+.travel-time { font-size: var(--text-sm); font-weight: 650; text-align: right; padding-top: 4px; color: var(--ink-2); }
+.travel-dot { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: #fff; position: relative; z-index: 1; }
+.travel-item { display: flex; flex-direction: column; gap: 2px; padding-top: 3px; }
+.travel-item a { display: inline-flex; gap: 4px; align-items: center; }
