@@ -4,6 +4,7 @@ import { defineConfig, devices } from '@playwright/test';
 // Start it with `npm run dev`, or let Playwright start it.
 export default defineConfig({
   testDir: '.',
+  globalSetup: './global-setup.ts',
   timeout: 120_000,
   expect: { timeout: 20_000 },
   fullyParallel: false,
@@ -23,7 +24,7 @@ export default defineConfig({
   ],
   webServer: process.env.BASE_URL ? undefined : {
     command: 'npm run dev',
-    url: 'http://localhost:3000',
+    url: 'http://localhost:3000/api/health',
     reuseExistingServer: true,
     timeout: 300_000,
     cwd: '../..',
